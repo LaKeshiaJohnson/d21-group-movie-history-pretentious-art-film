@@ -18,7 +18,7 @@ slider.oninput = function() {
   output.innerHTML = this.value;
   $('#starsearch').val('ratings:'+$('#myRange').val()+':');
   $('#starsearch').quicksearch('.card');
-}
+};
 
 
 function checkStars() {
