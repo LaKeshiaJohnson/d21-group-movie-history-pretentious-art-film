@@ -29,11 +29,16 @@ let Handlers = {
    */
   searchTmdbOnKeyUp: function(movieCall, domBuilder) {
     $('#user-input').on('keypress', event => {
+      if (event.keyCode == 13) {
+        $('.rateYo').css("style", "hidden");
+      }
+      
       let userInput = $('#user-input');
       if (event.keyCode === 13 && document.activeElement.id === 'user-input') {
         movieCall(userInput.val()).then(movieData => {
           console.log("moviedata", movieData);
           domBuilder(movieData);
+          $('.rateYo').css("visibility", "hidden");
         });
       }
     });
@@ -113,6 +118,7 @@ let Handlers = {
 //SET UP NAV BUTTONS 
 $(document).on("click", "#btn-showWatched", ()=>{
   console.log("WATCHED");
+    $(".rateYo").css("visiblity","visible");
         $('#user-input').hide();
         $('#user-unwatched').hide();
         $('#user-watched').css("display", "block");
@@ -131,6 +137,7 @@ $(document).on("click", "#btn-showUnWatched", ()=>{
 
 $(document).on("click", "#btn-showUnTracked", ()=>{
   console.log("UNWATCHED");
+  $('.rateYo').css("visibility", "hidden");
         $('#user-watched').hide();
         $('#user-unwatched').hide();
         $('#user-input').css("display", "block");
@@ -157,6 +164,7 @@ function logoutSearchBar(){
 
 //QUICK SEARCH SET UP FOR WATCHED
 $("input#user-watched").on("keydown",()=>{
+  // $($('.jq-ry-rated-group')[0])[0].style.width
     $('input#user-watched').quicksearch('.card');
 });
 //QUICK SEARCH SET UP FOR UNWATCHED
@@ -191,16 +199,24 @@ $(document).on("click",".rateYo",(e)=> {
 $('#btn-showWatched').on('click', ()=>{
   let watchListArray = [];
   Handlers.showUnwatched().then((item)=> {
-
+    let myitem = item;
       for (var prop in item) {
-
-          console.log("what is watchlist arr", watchListArray);
+        console.log("props are",prop);
+            console.log("what i lookg for",item[prop].starRating);
+          if (item[prop].starRating==undefined) {
+            delete myitem[prop];
+          }
+          else {
+            console.log("what is watchlist arr", item);
+            
           // if(movieObj.starRating !== null){
-          template.buildMovieCard(item);
+          
+          }
+          
+        }
         // }
-
-      }
-  });
+template.buildMovieCard(myitem);
+      });
         let movieId = $(this).data('movie-id');
       let moviesPromise = dbInteraction.getSingleMovieFromTMDB(movieId);
       let actorsPromise = dbInteraction.getMovieActors(movieId);
