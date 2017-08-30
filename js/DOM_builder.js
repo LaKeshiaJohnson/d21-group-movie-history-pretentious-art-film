@@ -1,6 +1,7 @@
 'use strict';
 
 let _ = require('lodash');
+require('./quicksearch.js');
 let tmdbInteractions = require('./TMDB_interaction');
 
 // require('./jquery.rateyo.js');
@@ -9,12 +10,20 @@ let tmdbInteractions = require('./TMDB_interaction');
 /*SLIDER*/
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
+
 output.innerHTML = slider.value;
 
 slider.oninput = function() {
-  output.innerHTML = this.value;
-};
 
+  output.innerHTML = this.value;
+  $('#starsearch').val('ratings:'+$('#myRange').val()+':');
+  $('#starsearch').quicksearch('.card');
+}
+
+
+function checkStars() {
+
+}
 //SETS UP AND BUILDS THE CARDS
 let domBuilder = {
   buildMovieCard: function(movieData) {
@@ -46,10 +55,15 @@ var starRating =[];
 
 
       };
-      card += `<div class="col-6 each-card" id="builderHelp">
+      card += 
+      `
+      
+
+            <div class="col-6 each-card" id="builderHelp">
+      
             <div class="card">
-            <div class="img-wrapper">
-            <img class="card-img-top" src="${currentMovie.poster}" alt="Card image cap">
+            <div class="img-wrapper">ratings:${movieData[index].starRating/2}:
+            <img class="card-img-top" src="${currentMovie.poster_path}" alt="Card image cap">
             </div>
             <div class="card-body">
             <div class="d-flex w-100 justify-content-between">
@@ -62,6 +76,7 @@ var starRating =[];
             ${currentMovie.stars}
             <div class="rateYo ${movie.id}" data-movie="${movie.id}" data-uglyid="${index}" ></div>
              </div>
+            </div>
             </div>
             </div>`;
 
@@ -83,10 +98,14 @@ var starRating =[];
 starRating.forEach((item, index)=>{
 
   console.log('what were looking for', movieData[keys[index]].id);
+  if (item == undefined){
+    item=0;
+  }
     $('.' + movieData[keys[index]].id).rateYo({
       maxValue:10,
     numStars: 10,
-    rating: item,
+    rating: item/2,
+    fullStar: true,
     spacing: "5px"
   }).on("rateyo.set", function (e, data) {
 

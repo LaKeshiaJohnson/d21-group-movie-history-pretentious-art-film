@@ -16,7 +16,8 @@ let dbInteraction = {
     return new Promise(function(resolve, reject) {
       let api = Api.getAPI().api;
       $.ajax({
-        url: `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${userInput}&include_adult=false&page=1`
+        url: `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${userInput}&include_adult=false&page=1`,
+        method:"GET"
       }).done(movieData => {
         resolve(movieData.results);
       });
