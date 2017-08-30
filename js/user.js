@@ -30,7 +30,7 @@ let User = {
   logInLogOut: function() {
     if (currentUser) {
       firebase.auth().signOut().then(() => {
-
+        $('.movie-scroll').removeClass("movie-scroll-window");
         clearUserPhoto();
 
           currentUser = null;

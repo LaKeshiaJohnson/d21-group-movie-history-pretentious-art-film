@@ -63,7 +63,7 @@ var starRating =[];
       
             <div class="card">
             <div class="img-wrapper">ratings:${movieData[index].starRating/2}:
-            <img class="card-img-top" src="${currentMovie.poster_path}" alt="Card image cap">
+            <img class="card-img-top" src="${currentMovie.poster}" alt="Card image cap">
             </div>
             <div class="card-body">
             <div class="d-flex w-100 justify-content-between">

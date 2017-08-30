@@ -10,12 +10,15 @@ let firebase = require('./firebase_interaction');
 $('#btn-login').click(event => {
       logoutSearchBar();
       User.logInLogOut();
+
     });
 //LOGIN API AND ADD MOVIES FUNCTIONALITY
 let Handlers = {
   loginClickEvent: function() {
     $('#btn-login').click(event => {
+      $('.movie-scroll').addClass("movie-scroll-window");
       logoutSearchBar();
+
       User.logInLogOut();
     });
   },
