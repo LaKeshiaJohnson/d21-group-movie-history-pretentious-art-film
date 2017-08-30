@@ -247,12 +247,20 @@ template.buildMovieCard(myitem);
 $('#btn-showUnWatched').on('click', ()=>{
   let watchListArray = [];
   Handlers.showUnwatched().then((item)=> {
-
+let myitem = item;
       for (var prop in item) {
-
+           if (item[prop].starRating!==undefined) {
+            delete myitem[prop];
+          }
+          else {
+            console.log("what is watchlist arr", item);
+            
+          // if(movieObj.starRating !== null){
+          
+          }
           console.log("what is watchlist arr", watchListArray);
           // if(movieObj.starRating == null){
-          template.buildMovieCard(item);
+          template.buildMovieCard(myitem);
         // }
 
       }
